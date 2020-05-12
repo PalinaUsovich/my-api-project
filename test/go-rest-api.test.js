@@ -26,7 +26,7 @@ it('Can create new user', async () => {
 }); 
 
 
-it.only ('Can update user',async () =>{
+it ('Can update user',async () =>{
     let email = `${randomString()}@example.com`;
     const expectedObject = {"first_name":"Brian","last_name":"Ratke","email":email, "gender": 'male', "status":"active"};
     const response = await goRestApi.createNewUser(expectedObject);
@@ -53,11 +53,14 @@ it.only ('Can update user',async () =>{
 });
 
 
-it.skip ('Can delete user',async ()=>{
-    const newCreatedUser = {"first_name":"Palina","last_name":"Usovich","email":"lew19@roberts.com","status":"married"};
-    const createdUser = await goRestApi.createNewUser(newCreatedUser);
-    console.log('Just created user:',createdUser.id);
-    const deletingUser = await goRestApi.deleteUser(createdUser.id);
-});
+it.only  ('Can delete user',async ()=>{
+    let email = `${randomString()}@example.com`;
+    const newCreatedUser = {"first_name":"Palina","last_name":"Usovich","email":email,"gender": 'female',"status":"active"};
+    const createdUserResponse = await goRestApi.createNewUser(newCreatedUser);
+    console.log('Just created user:',createdUserResponse);
+    const userToDeleteByID = createdUserResponse.result.id;
+    const deletingUserResponse= await goRestApi.deleteUser(userToDeleteByID);
+    console.log(deletingUserResponse);
+ });
 
 });
